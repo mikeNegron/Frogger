@@ -5,7 +5,14 @@ class HitBox:
     """Creates a square Hit-Box for obstacles."""
 
     def __init__(self, x1, y1, x2, y2):
-        """Creates the Hit-Box for 2 given coordinates pairs in oposite corners."""
+        """
+        Creates the Hit-Box for 2 given coordinates pairs in oposite corners.
+        \tParameters:\n
+        \t\t1. x1: x-value for top left corner.
+        \t\t2. y1: y-value for top left corner.
+        \t\t3. x2: x-value for bottom right corner.
+        \t\t4. y2: y-value for bottom right corner.
+        """
 
         self.x1 = x1
         self.y1 = y1
@@ -31,7 +38,7 @@ class HitBox:
         return self.corner_coords
 
     def map_sides(self):
-        """Gets coordinates for all the sides of the box"""
+        """Gets coordinates for all the sides of the box."""
 
         x_values = [range(self.x1, self.x2)] #One at y1 and one at y2
         y_values = [range(self.y1, self.y2)] #One at x1 and one at x2
@@ -41,13 +48,24 @@ class HitBox:
         return self.side_coords
 
     def move_box(self, dx):
-        """Moves box to the left by a given amount."""
+        """
+        Moves box to the left by a given amount.\n
+        Parameter:\n
+        \t 1. dx: shifts box to the left by given amount.
+        """
         self.box.move(-dx, 0)
 
         self.corner_coords = self.get_coords()
         self.side_coords = self.map_sides()
 
 class Display:
+    """
+    Generates a user interface for frogger.
+    \tParameters:\n
+    \t\t1. width: width of the whole GUI. Only accepts ints.
+    \t\t2. height: height of the whole GUI. Only accepts ints.
+    \t\t3. window: window where game is being drawn. Only accepts GraphWin object.
+    """
     def __init__(self, width, height, window):
         self.width = width
         self.height = height
@@ -58,7 +76,13 @@ class Display:
         self.river = {}
         self.road_lines = {}
 
-    def generate_starts(self, start_amount):
+    def _generate_starts(self, start_amount):
+        """
+        Generates starts for each phase.
+        \tParameter:\n
+        \t\t1. start-amount: amount of breaks between each phase. Only accepts ints.
+        
+        """
         self.starts[0] = Rectangle(Point(0, 550), Point(self.width, self.height))
         self.starts[0].setFill('Green')
         self.starts[0].setOutline('Green')
@@ -71,7 +95,12 @@ class Display:
             
             self.starts[i].draw(self.window)
 
-    def generate_river(self, goal_amount):
+    def _generate_river(self, goal_amount):
+        """
+        Generates all river related items (water and bushes between goals).
+        \tParameters:\n
+        \t\t1. goal-amount: every even number is a bush and every uneven number a goal. Only accepts ints.
+        """
         self.river[0] = Rectangle(Point(0, -25), Point(100, 75))
         self.river[0].setFill('Green')
         self.river[0].setOutline('Green')
@@ -96,7 +125,8 @@ class Display:
         water_body.setOutline('Blue')
         water_body.draw(self.window)
         
-    def generate_lines(self):
+    def _generate_lines(self):
+        """Generates road division."""
         self.road_lines[0] = Rectangle(Point(0, 435), Point(50, 455))
         self.road_lines[0].setFill('Yellow')
         self.road_lines[0].draw(self.window)
@@ -107,9 +137,15 @@ class Display:
             self.road_lines[j].draw(self.window)
 
     def generate_field(self):
-        self.generate_starts(2)
-        self.generate_river(11)
-        self.generate_lines()
+        """
+        Generates all the user interface by calling the following:\n
+        \t 1. generate-starts(2).
+        \t 2. generate-river(11).
+        \t 3. generate-lines().
+        """
+        self._generate_starts(2)
+        self._generate_river(11)
+        self._generate_lines()
         
 
 def main():
