@@ -2,10 +2,7 @@ from graphics import*
 
 #HitBox class
 class HitBox:
-    """Creates a square Hit-Box for obstacles."""
-
-    def __init__(self, x1, y1, x2, y2):
-        """
+    """
         Creates the Hit-Box for 2 given coordinates pairs in oposite corners.
         \tParameters:\n
         \t\t1. x1: x-value for top left corner.
@@ -14,6 +11,7 @@ class HitBox:
         \t\t4. y2: y-value for bottom right corner.
         """
 
+    def __init__(self, x1, y1, x2, y2):
         self.x1 = x1
         self.y1 = y1
         self.x2 = x2
@@ -25,7 +23,7 @@ class HitBox:
 
         self.side_coords = self.map_sides() #Might not need this
     
-    def get_coords(self):
+    def get_coords(self): #Fix, needs to return current p(n). Returns original coords
         """Returns the 4 coordinates of the Hit-Box (square)."""
 
         p1 = (self.x1, self.y1) # p1-------p2
@@ -47,6 +45,10 @@ class HitBox:
 
         return self.side_coords
 
+    def get_p(self, number): #Added last minute, verify
+        """Missing documentation"""
+        return self.corner_coords[number]
+
     def move_box(self, dx):
         """
         Moves box to the left by a given amount.\n
@@ -57,6 +59,7 @@ class HitBox:
 
         self.corner_coords = self.get_coords()
         self.side_coords = self.map_sides()
+
 
 class Display:
     """
