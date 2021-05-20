@@ -1,7 +1,7 @@
 from graphics import*
 
 #HitBox class
-class HitBox:
+class _HitBox:
     """
         Creates the Hit-Box for 2 given coordinates pairs in oposite corners.
         \tParameters:\n
@@ -9,8 +9,7 @@ class HitBox:
         \t\t2. y1: y-value for top left corner.
         \t\t3. x2: x-value for bottom right corner.
         \t\t4. y2: y-value for bottom right corner.
-        """
-
+    """
     def __init__(self, x1, y1, x2, y2):
         self.x1 = x1
         self.y1 = y1
@@ -20,30 +19,18 @@ class HitBox:
         self.box = Rectangle(Point(x1, y1), Point(x2, y2))
 
         self.corner_coords = self.get_coords()
-
-        self.side_coords = self.map_sides() #Might not need this
     
-    def get_coords(self): #Fix, needs to return current p(n). Returns original coords
+    def get_coords(self):
         """Returns the 4 coordinates of the Hit-Box (square)."""
 
-        p1 = (self.x1, self.y1) # p1-------p2
-        p2 = (self.x2, self.y1) # |         |
-        p3 = (self.x1, self.y2) # |         |
-        p4 = (self.x2, self.y2) # p3-------p4
+        p1 = (self.box.getP1().getX(), self.box.getP1().getY()) # p1-------p2
+        p2 = (self.box.getP2().getX(), self.box.getP1().getY()) # |         |
+        p3 = (self.box.getP1().getX(), self.box.getP2().getY()) # |         |
+        p4 = (self.box.getP2().getX(), self.box.getP2().getY()) # p3-------p4
 
         self.corner_coords = [p1, p2, p3, p4]
 
         return self.corner_coords
-
-    def map_sides(self):
-        """Gets coordinates for all the sides of the box."""
-
-        x_values = [range(self.x1, self.x2)] #One at y1 and one at y2
-        y_values = [range(self.y1, self.y2)] #One at x1 and one at x2
-
-        self.side_coords = [x_values, y_values]
-
-        return self.side_coords
 
     def get_p(self, number): #Added last minute, verify
         """Missing documentation"""
