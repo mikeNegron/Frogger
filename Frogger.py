@@ -183,6 +183,7 @@ class Frog:
                 self.initial.draw(self.window)
 
                 self.initial.move(0, self.y_dir[direction])
+        update(10)
 
 
 def main():
@@ -203,6 +204,8 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+#Might need to make a spawn class to control continuos movements
 
 #Car class to inherit HitBox class (bool expression to determine if it'll kill or not)
     #4 types of cars
