@@ -138,10 +138,52 @@ class Display:
         self._generate_lines()
 
 class Frog:
-    def __init__(self):
-        self.positions = {}
-        
-        
+    def __init__(self, window):
+        self.window = window
+
+        self.move_amount = 50
+
+        self.positions = {
+            'Up':r'All Frogs\North Frog.gif',
+            'Down':r'All Frogs\South Frog.gif',
+            'Left':r'All Frogs\West Frog.gif',
+            'Right':r'All Frogs\East Frog.gif'
+            }
+
+        self.initial = Image(Point(450, 575), self.positions['Up'])
+        self.initial.draw(self.window)
+
+        self.current = Point(450, 575)
+
+        self.x_dir = {
+            'Right': self.move_amount,
+            'Left': -self.move_amount,
+            }
+        self.y_dir = {
+            'Up': -self.move_amount,
+            'Down': self.move_amount
+            }
+    
+    def movement(self):
+        direction = self.window.checkKey()
+
+        if direction in self.positions:
+            self.current = self.initial.getAnchor()
+
+            self.initial.undraw()
+
+            if direction in self.x_dir:
+                self.initial = Image(self.current, self.positions[direction])
+                self.initial.draw(self.window)
+
+                self.initial.move(self.x_dir[direction], 0)
+
+            elif direction in self.y_dir:
+                self.initial = Image(self.current, self.positions[direction])
+                self.initial.draw(self.window)
+
+                self.initial.move(0, self.y_dir[direction])
+
 
 def main():
     win = GraphWin('Frogger', 900, 600, autoflush=False)
@@ -149,6 +191,11 @@ def main():
 
     ui = Display(900, 600, win)
     ui.generate_field()
+
+    temp = Frog(win)
+
+    while not(win.checkKey == 'Return'):
+        temp.movement()
 
     win.getMouse()
     win.close()
