@@ -136,6 +136,11 @@ class Display:
         self._generate_starts(2)
         self._generate_river(11)
         self._generate_lines()
+
+class Frog:
+    def __init__(self):
+        self.positions = {}
+        
         
 
 def main():
