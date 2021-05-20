@@ -183,7 +183,7 @@ class Frog:
                 self.initial.draw(self.window)
 
                 self.initial.move(0, self.y_dir[direction])
-        update(10)
+            update(10)
 
 
 def main():
