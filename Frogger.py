@@ -207,7 +207,7 @@ class Turtle:
     def turtle_movement(self):
         self.moves += 20
 
-        if self.moves == 900:
+        if self.moves == 960:
             self.lines[0].undraw()
             
             self.lines[0] = Image(Point(900, 120), self.states['Above'])
@@ -222,33 +222,38 @@ class Turtle:
         self.lines[1].move(-20,0)
         update(5)
 
-        if self.lines[0].getAnchor().getX() == 700:
+        if self.lines[0].getAnchor().getX() == 800:
             self.lines[0].undraw()
-            self.lines[0] = Image(Point(700, 120), self.states['Lowering'])
+            self.lines[0] = Image(Point(800, 120), self.states['Lowering'])
             self.lines[0].draw(self.window)
 
-        elif self.lines[0].getAnchor().getX() == 600:
+        elif self.lines[0].getAnchor().getX() == 700:
             self.lines[0].undraw()
         
+        elif self.lines[0].getAnchor().getX() == 600:
+            self.lines[0] = Image(Point(600, 120), self.states['Lowering'])
+            self.lines[0].draw(self.window)
+
         elif self.lines[0].getAnchor().getX() == 500:
-            self.lines[0] = Image(Point(500, 120), self.states['Lowering'])
+            self.lines[0].undraw()
+            self.lines[0] = Image(Point(500, 120), self.states['Above'])
             self.lines[0].draw(self.window)
 
         elif self.lines[0].getAnchor().getX() == 400:
             self.lines[0].undraw()
-            self.lines[0] = Image(Point(400, 120), self.states['Above'])
+            self.lines[0] = Image(Point(400, 120), self.states['Lowering'])
             self.lines[0].draw(self.window)
 
         elif self.lines[0].getAnchor().getX() == 300:
             self.lines[0].undraw()
-            self.lines[0] = Image(Point(300, 120), self.states['Lowering'])
+        
+        elif self.lines[0].getAnchor().getX() == 200:
+            self.lines[0] = Image(Point(200, 120), self.states['Lowering'])
             self.lines[0].draw(self.window)
 
-        elif self.lines[0].getAnchor().getX() == 200:
-            self.lines[0].undraw()
-        
         elif self.lines[0].getAnchor().getX() == 100:
-            self.lines[0] = Image(Point(100, 120), self.states['Lowering'])
+            self.lines[0].undraw()
+            self.lines[0] = Image(Point(100, 120), self.states['Above'])
             self.lines[0].draw(self.window)
 
         elif self.lines[0].getAnchor().getX() == 0:
