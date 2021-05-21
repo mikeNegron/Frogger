@@ -183,8 +183,61 @@ class Frog:
                 self.initial.draw(self.window)
 
                 self.initial.move(0, self.y_dir[direction])
-        update(10)
+            update(10)
 
+class Turtle:
+    def __init__(self, window):
+      self.window = window
+      
+      self.states = {'Above':r'Turtles\FullTurtlesGif.gif', 'Lowering':r'Turtles\TurtlesSubmergedGif.gif'}
+
+      self.lines = {}
+      self.lines[0] = Image(Point(840, 120), self.states['Above'])
+      self.lines[0].draw(self.window)
+
+      self.lines[1] = self.lines[0].clone()
+      self.lines[1].move(0, 160)
+      self.lines[1].draw(self.window)
+
+      self.eternity = 100
+
+    def turtle_movement(self):
+        self.lines[0].move(-20,0)
+        update(10)
+        self.lines[1].move(-20,0)
+        update(5)
+
+        if self.lines[0].getAnchor().getX() == 700:
+            self.lines[0].undraw()
+            self.lines[0] = Image(Point(700, 120), self.states['Lowering'])
+            self.lines[0].draw(self.window)
+
+        elif self.lines[0].getAnchor().getX() == 600:
+            self.lines[0].undraw()
+        
+        elif self.lines[0].getAnchor().getX() == 500:
+            self.lines[0] = Image(Point(500, 120), self.states['Lowering'])
+            self.lines[0].draw(self.window)
+
+        elif self.lines[0].getAnchor().getX() == 400:
+            self.lines[0].undraw()
+            self.lines[0] = Image(Point(400, 120), self.states['Above'])
+            self.lines[0].draw(self.window)
+
+        elif self.lines[0].getAnchor().getX() == 300:
+            self.lines[0].undraw()
+            self.lines[0] = Image(Point(300, 120), self.states['Lowering'])
+            self.lines[0].draw(self.window)
+
+        elif self.lines[0].getAnchor().getX() == 200:
+            self.lines[0].undraw()
+        
+        elif self.lines[0].getAnchor().getX() == 100:
+            self.lines[0] = Image(Point(100, 120), self.states['Lowering'])
+            self.lines[0].draw(self.window)
+
+        elif self.lines[0].getAnchor().getX() == 0:
+            self.lines[0].undraw()
 
 def main():
     win = GraphWin('Frogger', 900, 600, autoflush=False)
@@ -195,8 +248,11 @@ def main():
 
     temp = Frog(win)
 
-    while not(win.checkKey == 'Return'):
+    beans = Turtle(win)
+
+    while True:
         temp.movement()
+        beans.turtle_movement()
 
     win.getMouse()
     win.close()
