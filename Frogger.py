@@ -190,74 +190,46 @@ class Turtle:
       self.window = window
       
       self.states = {
-          'Above': r'Turtles\FullTurtlesGif.gif',
-          'Lowering': r'Turtles\TurtlesSubmergedGif.gif'
+          'Upper': r'Turtles\FullTurtlesGif.gif',
+          'Lower': r'Turtles\FullTurtlesR.gif'
           }
 
       self.lines = {}
-      self.lines[0] = Image(Point(900, 120), self.states['Above'])
+      self.lines[0] = Image(Point(900, 120), self.states['Upper'])
       self.lines[0].draw(self.window)
 
-      self.lines[1] = self.lines[0].clone()
-      self.lines[1].move(0, 160)
+      self.lines[1] = Image(Point(0, 280), self.states['Lower'])
       self.lines[1].draw(self.window)
 
-      self.moves = 0
+      self.moves1 = 0
+      self.moves2 = 0
 
     def turtle_movement(self):
-        self.moves += 20
+        self.moves1 += 20
+        self.moves2 += 10
 
-        if self.moves == 960:
+        if self.moves1 == 960:
             self.lines[0].undraw()
             
-            self.lines[0] = Image(Point(900, 120), self.states['Above'])
+            self.lines[0] = Image(Point(900, 120), self.states['Upper'])
             self.lines[0].draw(self.window)
 
-            self.moves = 0
+            self.moves1 = 0
+
+        if self.moves2 == 960:
+            self.lines[1].undraw()
+            
+            self.lines[1] = Image(Point(0, 280), self.states['Lower'])
+            self.lines[1].draw(self.window)
+
+            self.moves2 = 0
 
 
         self.lines[0].move(-20,0)
         update(10)
 
-        self.lines[1].move(-20,0)
-        update(5)
-
-        if self.lines[0].getAnchor().getX() == 800:
-            self.lines[0].undraw()
-            self.lines[0] = Image(Point(800, 120), self.states['Lowering'])
-            self.lines[0].draw(self.window)
-
-        elif self.lines[0].getAnchor().getX() == 700:
-            self.lines[0].undraw()
-        
-        elif self.lines[0].getAnchor().getX() == 600:
-            self.lines[0] = Image(Point(600, 120), self.states['Lowering'])
-            self.lines[0].draw(self.window)
-
-        elif self.lines[0].getAnchor().getX() == 500:
-            self.lines[0].undraw()
-            self.lines[0] = Image(Point(500, 120), self.states['Above'])
-            self.lines[0].draw(self.window)
-
-        elif self.lines[0].getAnchor().getX() == 400:
-            self.lines[0].undraw()
-            self.lines[0] = Image(Point(400, 120), self.states['Lowering'])
-            self.lines[0].draw(self.window)
-
-        elif self.lines[0].getAnchor().getX() == 300:
-            self.lines[0].undraw()
-        
-        elif self.lines[0].getAnchor().getX() == 200:
-            self.lines[0] = Image(Point(200, 120), self.states['Lowering'])
-            self.lines[0].draw(self.window)
-
-        elif self.lines[0].getAnchor().getX() == 100:
-            self.lines[0].undraw()
-            self.lines[0] = Image(Point(100, 120), self.states['Above'])
-            self.lines[0].draw(self.window)
-
-        elif self.lines[0].getAnchor().getX() == 0:
-            self.lines[0].undraw()
+        self.lines[1].move(10,0)
+        update(10)
 
 def main():
     win = GraphWin('Frogger', 900, 600, autoflush=False)
