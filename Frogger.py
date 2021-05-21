@@ -195,7 +195,7 @@ def main():
 
     temp = Frog(win)
 
-    while not(win.checkKey == 'Return'):
+    while True:
         temp.movement()
 
     win.getMouse()
