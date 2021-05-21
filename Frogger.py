@@ -189,21 +189,36 @@ class Turtle:
     def __init__(self, window):
       self.window = window
       
-      self.states = {'Above':r'Turtles\FullTurtlesGif.gif', 'Lowering':r'Turtles\TurtlesSubmergedGif.gif'}
+      self.states = {
+          'Above': r'Turtles\FullTurtlesGif.gif',
+          'Lowering': r'Turtles\TurtlesSubmergedGif.gif'
+          }
 
       self.lines = {}
-      self.lines[0] = Image(Point(840, 120), self.states['Above'])
+      self.lines[0] = Image(Point(900, 120), self.states['Above'])
       self.lines[0].draw(self.window)
 
       self.lines[1] = self.lines[0].clone()
       self.lines[1].move(0, 160)
       self.lines[1].draw(self.window)
 
-      self.eternity = 100
+      self.moves = 0
 
     def turtle_movement(self):
+        self.moves += 20
+
+        if self.moves == 900:
+            self.lines[0].undraw()
+            
+            self.lines[0] = Image(Point(900, 120), self.states['Above'])
+            self.lines[0].draw(self.window)
+
+            self.moves = 0
+
+
         self.lines[0].move(-20,0)
         update(10)
+
         self.lines[1].move(-20,0)
         update(5)
 
