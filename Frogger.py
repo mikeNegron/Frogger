@@ -231,6 +231,86 @@ class Turtle:
         self.lines[1].move(10,0)
         update(10)
 
+        
+class Car:
+    def __init__(self, windows):
+      self.windows = windows
+      
+      self.location = {
+          'LeftOrange': r'Car\car_left.gif',
+          'RightWhite': r'Car\whitecar_right.gif',
+          'LeftBlue': r'Car\bluecar_left.gif',
+          'RightRed': r'Car\redcar_right.gif',          
+          }
+
+      self.lane = {}
+      self.lane[0] = Image(Point(900, 375), self.location['LeftOrange'])
+      self.lane[0].draw(self.windows)
+
+      self.lane[1] = Image(Point(0, 525), self.location['RightWhite'])
+      self.lane[1].draw(self.windows)
+
+      self.lane[2] = Image(Point(900, 475), self.location['LeftBlue'])
+      self.lane[2].draw(self.windows)
+
+      self.lane[3] = Image(Point(0, 425), self.location['RightRed'])
+      self.lane[3].draw(self.windows)
+
+      self.moves1 = 0
+      self.moves2 = 0
+      self.moves3 = 0
+      self.moves4 = 0
+
+    def car_movement(self):
+        self.moves1 += 30
+        self.moves2 += 20
+        self.moves3 += 40
+        self.moves4 += 30        
+
+        if self.moves1 == 960:
+            self.lane[0].undraw()
+            
+            self.lane[0] = Image(Point(900, 375), self.location['LeftOrange'])
+            self.lane[0].draw(self.windows)
+
+            self.moves1 = 0
+
+        if self.moves2 == 960:
+            self.lane[1].undraw()
+            
+            self.lane[1] = Image(Point(0, 525), self.location['RightWhite'])
+            self.lane[1].draw(self.windows)
+
+            self.moves2 = 0
+
+        if self.moves3 == 960:
+            self.lane[2].undraw()
+            
+            self.lane[2] = Image(Point(900, 475), self.location['LeftBlue'])
+            self.lane[2].draw(self.windows)
+
+            self.moves3 = 0
+
+        if self.moves4 == 960:
+            self.lane[3].undraw()
+            
+            self.lane[3] = Image(Point(0, 425), self.location['RightRed'])
+            self.lane[3].draw(self.windows)
+
+            self.moves4 = 0
+
+        self.lane[0].move(-30,0)
+        update(30)
+
+        self.lane[1].move(20,0)
+        update(30)
+
+        self.lane[2].move(-40,0)
+        update(30)
+
+        self.lane[3].move(30,0)
+        update(30)
+
 def main():
     win = GraphWin('Frogger', 900, 600, autoflush=False)
     win.setBackground('Black')
@@ -242,9 +322,12 @@ def main():
 
     tp = Turtle(win)
 
+    car = Car(win)
+
     while True:
         temp.movement()
         tp.turtle_movement()
+        car.car_movement()
 
     win.getMouse()
     win.close()
