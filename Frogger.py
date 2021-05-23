@@ -115,6 +115,8 @@ class Display:
         water_body.setFill('Blue')
         water_body.setOutline('Blue')
         water_body.draw(self.window)
+        print(water_body.config['fill'] == 'Blue')
+        
         
     def _generate_lines(self):
         """Generates road division."""
@@ -187,7 +189,7 @@ class Frog:
                 self.initial.draw(self.window)
 
                 self.initial.move(0, self.y_dir[direction])
-                
+
             self.hitbox.x1 = self.current.getX() - self.initial.getWidth() / 2
             self.hitbox.x2 = self.current.getX() + self.initial.getWidth() / 2
             self.hitbox.y1 = self.current.getY() - self.initial.getHeight() / 2
@@ -239,6 +241,14 @@ class Turtle:
 
         self.lines[1].move(10,0)
         update(10)
+    
+    def turtle_collision1(self, Frog):
+        if (Frog.initial.getAnchor().getX() >= self.lines[0].getAnchor().getX() - self.lines[0].getWidth() / 2 and
+            Frog.initial.getAnchor().getX() <= self.lines[0].getAnchor().getX() + self.lines[0].getWidth() / 2 and 
+            Frog.initial.getAnchor().getY() >= self.lines[0].getAnchor().getY() - self.lines[0].getHeight() / 2 and
+            Frog.initial.getAnchor().getY() <= self.lines[0].getAnchor().getY() + self.lines[0].getHeight() / 2):
+            return True
+        return False
 
         
 class Car:
@@ -353,6 +363,7 @@ class Logs:
 def main():
     win = GraphWin('Frogger', 900, 600, autoflush=False)
     win.setBackground('Black')
+    print(win.getMouse().config)
 
     ui = Display(900, 600, win)
     ui.generate_field()
@@ -367,6 +378,9 @@ def main():
 
     while True:
         logs.is_collision1(temp)
+        if (tp.turtle_collision1(temp)):
+            print("hit")
+        temp.initial.getAnchor()
         temp.movement()
         tp.turtle_movement()
         car.car_movement()
