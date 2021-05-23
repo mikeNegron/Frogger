@@ -206,10 +206,10 @@ class Turtle:
           }
 
       self.lines = {}
-      self.lines[0] = Image(Point(900, 120), self.states['Upper'])
+      self.lines[0] = Image(Point(900, 125), self.states['Upper'])
       self.lines[0].draw(self.window)
 
-      self.lines[1] = Image(Point(0, 280), self.states['Lower'])
+      self.lines[1] = Image(Point(0, 275), self.states['Lower'])
       self.lines[1].draw(self.window)
 
       self.moves1 = 0
@@ -222,7 +222,7 @@ class Turtle:
         if self.moves1 == 960:
             self.lines[0].undraw()
             
-            self.lines[0] = Image(Point(900, 120), self.states['Upper'])
+            self.lines[0] = Image(Point(900, 125), self.states['Upper'])
             self.lines[0].draw(self.window)
 
             self.moves1 = 0
@@ -230,7 +230,7 @@ class Turtle:
         if self.moves2 == 960:
             self.lines[1].undraw()
             
-            self.lines[1] = Image(Point(0, 280), self.states['Lower'])
+            self.lines[1] = Image(Point(0, 275), self.states['Lower'])
             self.lines[1].draw(self.window)
 
             self.moves2 = 0
