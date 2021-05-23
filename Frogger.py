@@ -1,4 +1,5 @@
 from graphics import*
+from random import*
 
 #HitBox class
 class _HitBox:
@@ -153,6 +154,9 @@ class Frog:
         self.initial = Image(Point(450, 575), self.positions['Up'])
         self.initial.draw(self.window)
 
+        self.hitbox = _HitBox(self.initial.getAnchor().getX() - self.initial.getWidth() / 2, self.initial.getAnchor().getY() - self.initial.getHeight() / 2,
+                             self.initial.getAnchor().getX() + self.initial.getWidth() / 2, self.initial.getAnchor().getY() + self.initial.getHeight() / 2)
+
         self.current = Point(450, 575)
 
         self.x_dir = {
@@ -183,6 +187,11 @@ class Frog:
                 self.initial.draw(self.window)
 
                 self.initial.move(0, self.y_dir[direction])
+                
+            self.hitbox.x1 = self.current.getX() - self.initial.getWidth() / 2
+            self.hitbox.x2 = self.current.getX() + self.initial.getWidth() / 2
+            self.hitbox.y1 = self.current.getY() - self.initial.getHeight() / 2
+            self.hitbox.y2 = self.current.getY() + self.initial.getHeight() / 2
             update(10)
 
 class Turtle:
@@ -311,6 +320,36 @@ class Car:
         self.lane[3].move(30,0)
         update(30)
 
+class Logs:
+    def __init__(self, window, log_image1, log_image2):
+
+        self.window = window
+
+        self.logs = {}
+
+        self.logs[0] = Image(Point(0, 170), log_image1)
+
+        self.logs[1] = Image(Point(900, 220), log_image2)
+
+        self.logs[0].draw(self.window)
+
+        self.log1damage = randint(0, 1)
+        self.log2damage = randint(0, 1)
+
+    def get_window(self):
+        return self.window
+
+    def get_logs(self):
+        return self.logs
+
+    def is_collision1(self, Frog):
+        if (Frog.initial.getAnchor().getX() >= self.logs[0].getAnchor().getX() - self.logs[0].getWidth() / 2 and
+            Frog.initial.getAnchor().getX() <= self.logs[0].getAnchor().getX() + self.logs[0].getWidth() / 2 and 
+            Frog.initial.getAnchor().getY() >= self.logs[0].getAnchor().getY() - self.logs[0].getHeight() / 2 and
+            Frog.initial.getAnchor().getY() <= self.logs[0].getAnchor().getY() + self.logs[0].getHeight() / 2):
+            return True
+        return False     
+
 def main():
     win = GraphWin('Frogger', 900, 600, autoflush=False)
     win.setBackground('Black')
@@ -324,7 +363,10 @@ def main():
 
     car = Car(win)
 
+    logs = Logs(win, r'Car\car_left.gif', r'Car\car_left.gif')
+
     while True:
+        logs.is_collision1(temp)
         temp.movement()
         tp.turtle_movement()
         car.car_movement()
