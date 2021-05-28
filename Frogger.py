@@ -331,15 +331,18 @@ class Car:
         update(30)
 
 class Logs:
-    def __init__(self, window, log_image1, log_image2):
+    def __init__(self, window):
 
         self.window = window
 
+        self.images =  {'Left': r'Logs\LogL.gif',
+                        'Right': r'Logs\LogR.gif'}
+
         self.logs = {}
 
-        self.logs[0] = Image(Point(0, 170), log_image1)
+        self.logs[0] = Image(Point(0, 170), self.images['Left'])
 
-        self.logs[1] = Image(Point(900, 220), log_image2)
+        self.logs[1] = Image(Point(900, 220), self.images['Right'])
 
         self.logs[0].draw(self.window)
 
@@ -374,7 +377,7 @@ def main():
 
     car = Car(win)
 
-    logs = Logs(win, r'Car\car_left.gif', r'Car\car_left.gif')
+    logs = Logs(win)
 
     while True:
         logs.is_collision1(temp)
