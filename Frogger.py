@@ -361,7 +361,80 @@ class Logs:
             Frog.initial.getAnchor().getY() >= self.logs[0].getAnchor().getY() - self.logs[0].getHeight() / 2 and
             Frog.initial.getAnchor().getY() <= self.logs[0].getAnchor().getY() + self.logs[0].getHeight() / 2):
             return True
-        return False     
+        return False
+
+
+class PlayerRecord:
+    def __init__(self, file):
+        try:
+            with open(file, 'r') as test:
+                test.seek(0)
+
+        except Exception as e:
+            print(f'[WARNING]: {e}. Creating appropriate file...')
+
+            with open(file, 'w') as test:
+                test.seek(0)
+
+        finally:
+            self.file = file
+
+        self.contents = {}
+        self.scores = []
+
+    def read(self):
+        with open(self.file, 'r') as players:
+            lines = players.readlines()
+
+            for i, info in enumerate(lines):
+                temp_name = ''
+                temp_time = ''
+                temp_score = ''
+
+                for j in range(0, 5):
+                    temp_name += info[j]
+
+                for j in range(5, 10):
+                    temp_time += info[j]
+
+                for j in range(10, 16):
+                    temp_score += info[j]
+
+                self.contents[i] = (temp_name, temp_time, temp_score)
+
+        self.scores = [x[3] for x in self.contents]
+
+        return self.contents
+    
+    def read(self):
+        with open(self.file, 'r') as lines:
+            lines = lines.readlines()
+            
+        return self.contents
+
+    def _verify(self, temp_points):
+        length = len(self.contents)
+
+        if length == 10:
+            for i, number in enumerate(self.scores):
+                if temp_points > int(number):
+                    return True, i
+
+            return False, -1
+        
+        return True, length
+
+    def write(self, name, time, points):
+        greater, index = self._verify(points)
+
+        if greater:
+            self.contents[index] = (name, time, points)
+
+            data = [''.join(info) + '\n' for info in self.contents]
+
+            with open(self.file, 'w') as new_data:
+                new_data.writelines(data)
+
 
 def main():
     win = GraphWin('Frogger', 900, 600, autoflush=False)
