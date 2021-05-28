@@ -367,14 +367,16 @@ class Logs:
 class PlayerRecord:
     def __init__(self, file):
         try:
-            with open(file, 'r') as test:
-                test.seek(0)
+            is_open = open(file, 'r')
 
         except Exception as e:
             print(f'[WARNING]: {e}. Creating appropriate file...')
 
             with open(file, 'w') as test:
                 test.seek(0)
+
+        else:
+            is_open.close()
 
         finally:
             self.file = file
@@ -397,19 +399,13 @@ class PlayerRecord:
                 for j in range(5, 10):
                     temp_time += info[j]
 
-                for j in range(10, 16):
+                for j in range(10, 15):
                     temp_score += info[j]
 
                 self.contents[i] = (temp_name, temp_time, temp_score)
 
-        self.scores = [x[3] for x in self.contents]
+        self.scores = [self.contents[x][2] for x in self.contents]
 
-        return self.contents
-    
-    def read(self):
-        with open(self.file, 'r') as lines:
-            lines = lines.readlines()
-            
         return self.contents
 
     def _verify(self, temp_points):
@@ -428,16 +424,26 @@ class PlayerRecord:
         greater, index = self._verify(points)
 
         if greater:
-            self.contents[index] = (name, time, points)
+            self.contents[index] = (name, time, str(points))
 
-            data = [''.join(info) + '\n' for info in self.contents]
+            data = [''.join(self.contents[info]) + '\n' for info in self.contents]
 
             with open(self.file, 'w') as new_data:
                 new_data.writelines(data)
 
 
 def main():
-    win = GraphWin('Frogger', 900, 600, autoflush=False)
+    testing = PlayerRecord('Ledger.txt')
+
+    records = testing.read()
+
+    testing.write('ZZZZZ', '12:45', 10101)
+
+    result = testing.read()
+
+    print(result)
+
+    """ win = GraphWin('Frogger', 900, 600, autoflush=False)
     win.setBackground('Black')
     print(win.getMouse().config)
 
@@ -462,7 +468,7 @@ def main():
         car.car_movement()
 
     win.getMouse()
-    win.close()
+    win.close() """
 
 
 if __name__ == '__main__':
