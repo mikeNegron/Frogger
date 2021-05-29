@@ -345,6 +345,7 @@ class Logs:
         self.logs[1] = Image(Point(900, 220), self.images['Right'])
 
         self.logs[0].draw(self.window)
+        self.logs[1].draw(self.window)
 
         self.log1damage = randint(0, 1)
         self.log2damage = randint(0, 1)
@@ -473,7 +474,7 @@ def main():
 
     print(result)
 
-    """ win = GraphWin('Frogger', 900, 600, autoflush=False)
+    win = GraphWin('Frogger', 900, 600, autoflush=False)
     win.setBackground('Black')
     print(win.getMouse().config)
 
@@ -496,9 +497,10 @@ def main():
         temp.movement()
         tp.turtle_movement()
         car.car_movement()
+        logs.log_movement()
 
     win.getMouse()
-    win.close() """
+    win.close()
 
 
 if __name__ == '__main__':
