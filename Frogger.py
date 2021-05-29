@@ -689,8 +689,6 @@ class HomeScreen:
             selection = ScoreDisplay()
 
         elif self.buttons[2].getP1().getX() < temp.getX() < self.buttons[2].getP2().getX() and self.buttons[2].getP1().getY() < temp.getY() < self.buttons[2].getP2().getY():
-            print('quit')
-
             self.hub.close()
 
 
