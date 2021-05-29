@@ -512,7 +512,7 @@ class Game(User):
 
             logs.is_collision1(temp)
             if (tp.turtle_collision1(temp)):
-                print("hit")
+                break
             temp.initial.getAnchor()
             temp.movement()
             tp.turtle_movement()
@@ -528,6 +528,32 @@ class Game(User):
         record(User.get_name(), total_time, score)
 
         win.getMouse()
+
+
+class ScoreDisplay:
+    def __init__(self):
+        self.disp = GraphWin('Scores', 220, 220)
+        self.disp.setBackground('White')
+
+        self.record = PlayerRecord('Ledger.txt')
+        self.scores = self.record.read()
+
+        legend = Text(Point(100, 20), 'Name | Time | Score')
+        legend.setSize()
+
+        for name, time, score in self.scores:
+            player = Text(Point(100, 40), f'{name} | {time} | {score}')
+            player.setSize(18)
+            player.draw(self.disp)
+            player.move(0, 20)
+
+
+
+
+
+
+
+
 
 
 class HomeScreen:
@@ -607,19 +633,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-#Might need to make a spawn class to control continuos movements
-
-#Car class to inherit HitBox class (bool expression to determine if it'll kill or not)
-    #4 types of cars
-        #Could be implemented on a list
-
-#Snake class to inherit HitBox class
-
-#Turtle class to control their behavior (sink and float) inherits HitBox too
-
-#Frog class
-
-#Reward class
-
-#Game class to run frogger
