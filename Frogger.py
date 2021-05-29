@@ -1,5 +1,6 @@
 from graphics import*
 from random import*
+import time as tm
 
 #HitBox class
 class _HitBox:
@@ -462,19 +463,40 @@ class PlayerRecord:
             with open(self.file, 'w') as new_data:
                 new_data.writelines(data)
 
+        
+class User:
+    def __init__(self):
+        reg_win = GraphWin('Registry', 200, 200)
+        reg_win.setBackground('White')
 
-class Game:
+        register = Entry(Point(100, 50), 5)
+        register.draw(reg_win)
+
+        for i in range(5):
+            reg_win.getKey()
+
+        self.name = register.getText()
+
+    def get_name(self):
+        return self.name
+
+
+class Game(User):
     def __init__(self, height, width, color):
         self.height = height
         self.width = width
         self.color = color
 
-    def run(self):
+    def run(self):        
         win = GraphWin('Frogger', self.width, self.height, autoflush=False)
         win.setBackground(self.color)
 
         ui = Display(self.width, self.height, win)
         ui.generate_field()
+
+        record = PlayerRecord('Ledger.txt')
+
+        record.read()
 
         temp = Frog(win)
 
@@ -483,6 +505,8 @@ class Game:
         car = Car(win)
 
         logs = Logs(win)
+
+        start = tm.time()
 
         while True:
 
@@ -495,8 +519,15 @@ class Game:
             car.car_movement()
             logs.log_movement()
 
+        end = tm.time()
+
+        total_time = start - end
+
+        total_time = round(total_time, 5)
+
+        record(User.get_name(), total_time, score)
+
         win.getMouse()
-        win.close()
 
 
 class HomeScreen:
