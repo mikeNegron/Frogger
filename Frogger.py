@@ -381,7 +381,7 @@ class Logs:
         if self.moves1 == 960:
             self.logs[0].undraw()
             
-            self.logs[0] = Image(Point(0, 170), self.states['Left'])
+            self.logs[0] = Image(Point(0, 170), self.images['Left'])
             self.logs[0].draw(self.window)
 
             self.moves1 = 0
@@ -389,7 +389,7 @@ class Logs:
         if self.moves2 == 960:
             self.logs[1].undraw()
             
-            self.logs[1] = Image(Point(900, 220), self.states['Left'])
+            self.logs[1] = Image(Point(900, 220), self.images['Left'])
             self.logs[1].draw(self.window)
 
             self.moves2 = 0
@@ -476,7 +476,6 @@ def main():
 
     win = GraphWin('Frogger', 900, 600, autoflush=False)
     win.setBackground('Black')
-    print(win.getMouse().config)
 
     ui = Display(900, 600, win)
     ui.generate_field()
