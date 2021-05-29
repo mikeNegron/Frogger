@@ -542,7 +542,7 @@ class User:
         register = Entry(Point(100, 50), 5)
         register.draw(reg_win)
 
-        for i in range(6):
+        for i in range(0, 5):
             reg_win.getKey()
         
         reg_win.close()
