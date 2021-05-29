@@ -363,6 +363,33 @@ class Logs:
             return True
         return False
 
+    def log_movement(self):
+
+        self.logs[0].move(20,0)
+        update(10)
+
+        self.logs[1].move(-10,0)
+        update(10)
+        
+        self.moves1 += 20
+        self.moves2 += 10
+
+        if self.moves1 == 960:
+            self.logs[0].undraw()
+            
+            self.logs[0] = Image(Point(0, 170), self.states['Left'])
+            self.logs[0].draw(self.window)
+
+            self.moves1 = 0
+        
+        if self.moves2 == 960:
+            self.logs[1].undraw()
+            
+            self.logs[1] = Image(Point(900, 220), self.states['Left'])
+            self.logs[1].draw(self.window)
+
+            self.moves2 = 0
+
 
 class PlayerRecord:
     def __init__(self, file):
