@@ -349,6 +349,9 @@ class Logs:
         self.log1damage = randint(0, 1)
         self.log2damage = randint(0, 1)
 
+        self.moves1 = 0
+        self.moves2 = 0
+
     def get_window(self):
         return self.window
 
