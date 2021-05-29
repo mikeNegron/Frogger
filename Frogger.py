@@ -617,28 +617,26 @@ class Game(User):
 
 class ScoreDisplay:
     def __init__(self):
-        self.disp = GraphWin('Scores', 220, 220)
-        self.disp.setBackground('White')
+        self.disp = GraphWin('Scores', 900, 600)
+        self.disp.setBackground('Purple')
 
         self.record = PlayerRecord('Ledger.txt')
         self.scores = self.record.read()
 
-        legend = Text(Point(100, 20), 'Name | Time | Score')
-        legend.setSize()
+        legend = Text(Point(450, 10), 'Name | Time | Score')
+        legend.setSize(18)
+        legend.draw(self.disp)
 
-        for name, time, score in self.scores:
-            player = Text(Point(100, 40), f'{name} | {time} | {score}')
+        moved = 45
+
+        for name, info in self.scores.items():
+            player = Text(Point(450, moved), f'{info[0]} | {info[1]} | {info[2]}')
             player.setSize(18)
             player.draw(self.disp)
-            player.move(0, 20)
+            moved += 40
 
-
-
-
-
-
-
-
+        self.disp.getMouse()
+        self.disp.close()
 
 
 class HomeScreen:
@@ -686,9 +684,9 @@ class HomeScreen:
             selection.run()
 
         elif self.buttons[1].getP1().getX() < temp.getX() < self.buttons[1].getP2().getX() and self.buttons[1].getP1().getY() < temp.getY() < self.buttons[1].getP2().getY():
-            print('score')
-
             self.hub.close()
+
+            selection = ScoreDisplay()
 
         elif self.buttons[2].getP1().getX() < temp.getX() < self.buttons[2].getP2().getX() and self.buttons[2].getP1().getY() < temp.getY() < self.buttons[2].getP2().getY():
             print('quit')
