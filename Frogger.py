@@ -463,7 +463,106 @@ class PlayerRecord:
                 new_data.writelines(data)
 
 
+class Game:
+    def __init__(self, height, width, color):
+        self.height = height
+        self.width = width
+        self.color = color
+
+    def run(self):
+        win = GraphWin('Frogger', self.width, self.height, autoflush=False)
+        win.setBackground(self.color)
+
+        ui = Display(self.width, self.height, win)
+        ui.generate_field()
+
+        temp = Frog(win)
+
+        tp = Turtle(win)
+
+        car = Car(win)
+
+        logs = Logs(win)
+
+        while True:
+
+            logs.is_collision1(temp)
+            if (tp.turtle_collision1(temp)):
+                print("hit")
+            temp.initial.getAnchor()
+            temp.movement()
+            tp.turtle_movement()
+            car.car_movement()
+            logs.log_movement()
+
+        win.getMouse()
+        win.close()
+
+
+class HomeScreen:
+    def __init__(self, high, width):
+        self.high = high
+        self.width = width
+
+        self.hub = GraphWin('Home', self.high, self.width)
+        self.hub.setBackground('Purple')
+
+        self.buttons = {}
+
+    def user_options(self):
+        self.buttons[0] = Rectangle(Point(375, 150), Point(525, 200))
+        self.buttons[0].setFill('Green')
+        self.buttons[0].draw(self.hub)
+
+        start = Text(Point(450, 175), 'START')
+        start.setSize(18)
+        start.draw(self.hub)
+
+        self.buttons[1] = Rectangle(Point(375, 225), Point(525, 275))
+        self.buttons[1].setFill('Green')
+        self.buttons[1].draw(self.hub)
+
+        scores = Text(Point(450, 250), 'SCORES')
+        scores.setSize(18)
+        scores.draw(self.hub)
+
+        self.buttons[2] = Rectangle(Point(375, 300), Point(525, 350))
+        self.buttons[2].setFill('Green')
+        self.buttons[2].draw(self.hub)
+
+        quit = Text(Point(450, 325), 'QUIT')
+        quit.setSize(18)
+        quit.draw(self.hub)
+
+    def action(self):
+        temp = self.hub.getMouse()
+
+        if self.buttons[0].getP1().getX() < temp.getX() < self.buttons[0].getP2().getX() and self.buttons[0].getP1().getY() < temp.getY() < self.buttons[0].getP2().getY():
+            self.hub.close()
+
+            selection = Game(600, 900, 'Black')
+            selection.run()
+
+        elif self.buttons[1].getP1().getX() < temp.getX() < self.buttons[1].getP2().getX() and self.buttons[1].getP1().getY() < temp.getY() < self.buttons[1].getP2().getY():
+            print('score')
+
+            self.hub.close()
+
+        elif self.buttons[2].getP1().getX() < temp.getX() < self.buttons[2].getP2().getX() and self.buttons[2].getP1().getY() < temp.getY() < self.buttons[2].getP2().getY():
+            print('quit')
+
+            self.hub.close()
+
+
 def main():
+    temp = HomeScreen(900, 600)
+
+    temp.user_options()
+
+    temp.action()
+
+    temp.hub.getMouse()
+
     testing = PlayerRecord('Ledger.txt')
 
     records = testing.read()
@@ -473,33 +572,6 @@ def main():
     result = testing.read()
 
     print(result)
-
-    win = GraphWin('Frogger', 900, 600, autoflush=False)
-    win.setBackground('Black')
-
-    ui = Display(900, 600, win)
-    ui.generate_field()
-
-    temp = Frog(win)
-
-    tp = Turtle(win)
-
-    car = Car(win)
-
-    logs = Logs(win)
-
-    while True:
-        logs.is_collision1(temp)
-        if (tp.turtle_collision1(temp)):
-            print("hit")
-        temp.initial.getAnchor()
-        temp.movement()
-        tp.turtle_movement()
-        car.car_movement()
-        logs.log_movement()
-
-    win.getMouse()
-    win.close()
 
 
 if __name__ == '__main__':
