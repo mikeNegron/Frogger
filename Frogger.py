@@ -526,7 +526,7 @@ class PlayerRecord:
         greater, index = self._verify(points)
 
         if greater:
-            self.contents[index] = (name, time, str(points))
+            self.contents[index] = (name, str(time), str(points))
 
             data = [''.join(self.contents[info]) + '\n' for info in self.contents]
 
@@ -604,13 +604,13 @@ class Game(User):
 
         end = tm.time()
 
-        total_time = start - end
+        total_time = end-start
 
-        total_time = round(total_time, 5)
+        rounded_time = round(total_time, 5)
 
         player = User()
 
-        record.write(player.get_name(), total_time, score)
+        record.write(player.get_name(), rounded_time, score)
 
         win.getMouse()
 
