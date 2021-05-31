@@ -200,22 +200,25 @@ class Frog:
 class SafeZone:
     def __init__(self, window):
         self.window = window
-        self.safe_zone1 = Rectangle(Point(0, 300), Point(900, 600))
-        self.safe_zone2 = Rectangle(Point(0, 0), Point(900, 100))
+
+        self.safe_zones = {}
+
+        self.safe_zones[0] = Rectangle(Point(0, 300), Point(900, 600))
+        self.safe_zones[1] = Rectangle(Point(0, 0), Point(900, 100))
 
     def frog_collision1(self, Frog):
-        if (Frog.initial.getAnchor().getX() >= self.safe_zone1.getP1().getX() and
-            Frog.initial.getAnchor().getX() <= self.safe_zone1.getP2().getX() and 
-            Frog.initial.getAnchor().getY() >= self.safe_zone1.getP1().getY() and
-            Frog.initial.getAnchor().getY() <= self.safe_zone1.getP2().getY()):
+        if (Frog.initial.getAnchor().getX() >= self.safe_zones[0].getP1().getX() and
+            Frog.initial.getAnchor().getX() <= self.safe_zones[0].getP2().getX() and 
+            Frog.initial.getAnchor().getY() >= self.safe_zones[0].getP1().getY() and
+            Frog.initial.getAnchor().getY() <= self.safe_zones[0].getP2().getY()):
             return True
         return False
 
     def frog_collision2(self, Frog):
-        if (Frog.initial.getAnchor().getX() >= self.safe_zone2.getP1().getX() and
-            Frog.initial.getAnchor().getX() <= self.safe_zone2.getP2().getX() and 
-            Frog.initial.getAnchor().getY() >= self.safe_zone2.getP1().getY() and
-            Frog.initial.getAnchor().getY() <= self.safe_zone2.getP2().getY()):
+        if (Frog.initial.getAnchor().getX() >= self.safe_zones[1].getP1().getX() and
+            Frog.initial.getAnchor().getX() <= self.safe_zones[1].getP2().getX() and 
+            Frog.initial.getAnchor().getY() >= self.safe_zones[1].getP1().getY() and
+            Frog.initial.getAnchor().getY() <= self.safe_zones[1].getP2().getY()):
             return True
         return False
 
@@ -265,22 +268,17 @@ class Turtle:
 
         self.lines[1].move(30,0)
         update(25)
-    
-    def turtle_collision1(self, Frog):
-        if (Frog.initial.getAnchor().getX() >= self.lines[0].getAnchor().getX() - self.lines[0].getWidth() / 2 and
-            Frog.initial.getAnchor().getX() <= self.lines[0].getAnchor().getX() + self.lines[0].getWidth() / 2 and 
-            Frog.initial.getAnchor().getY() >= self.lines[0].getAnchor().getY() - self.lines[0].getHeight() / 2 and
-            Frog.initial.getAnchor().getY() <= self.lines[0].getAnchor().getY() + self.lines[0].getHeight() / 2):
-            return True
-        return False
 
-    def turtle_collision2(self, Frog):
-        if (Frog.initial.getAnchor().getX() >= self.lines[1].getAnchor().getX() - self.lines[1].getWidth() / 2 and
-            Frog.initial.getAnchor().getX() <= self.lines[1].getAnchor().getX() + self.lines[1].getWidth() / 2 and 
-            Frog.initial.getAnchor().getY() >= self.lines[1].getAnchor().getY() - self.lines[1].getHeight() / 2 and
-            Frog.initial.getAnchor().getY() <= self.lines[1].getAnchor().getY() + self.lines[1].getHeight() / 2):
-            return True
+    def turtle_collisions(self, Frog):
+        for i in range(0, len(self.lines)):
+            if (Frog.initial.getAnchor().getX() >= self.lines[i].getAnchor().getX() - self.lines[i].getWidth() / 2 and
+                Frog.initial.getAnchor().getX() <= self.lines[i].getAnchor().getX() + self.lines[i].getWidth() / 2 and 
+                Frog.initial.getAnchor().getY() >= self.lines[i].getAnchor().getY() - self.lines[i].getHeight() / 2 and
+                Frog.initial.getAnchor().getY() <= self.lines[i].getAnchor().getY() + self.lines[i].getHeight() / 2):
+                return True
         return False
+    
+
 
 class Car:
     def __init__(self, windows):
@@ -361,37 +359,15 @@ class Car:
         self.lane[3].move(30,0)
         update(30)
 
-    def car_collision1(self, Frog):
-        if (Frog.initial.getAnchor().getX() >= self.lane[0].getAnchor().getX() - self.lane[0].getWidth() / 2 and
-            Frog.initial.getAnchor().getX() <= self.lane[0].getAnchor().getX() + self.lane[0].getWidth() / 2 and 
-            Frog.initial.getAnchor().getY() >= self.lane[0].getAnchor().getY() - self.lane[0].getHeight() / 2 and
-            Frog.initial.getAnchor().getY() <= self.lane[0].getAnchor().getY() + self.lane[0].getHeight() / 2):
-            return True
+    def car_collisions(self, Frog):
+        for i in range(0, len(self.lane)):
+            if (Frog.initial.getAnchor().getX() >= self.lane[i].getAnchor().getX() - self.lane[i].getWidth() / 2 and
+                Frog.initial.getAnchor().getX() <= self.lane[i].getAnchor().getX() + self.lane[i].getWidth() / 2 and 
+                Frog.initial.getAnchor().getY() >= self.lane[i].getAnchor().getY() - self.lane[i].getHeight() / 2 and
+                Frog.initial.getAnchor().getY() <= self.lane[i].getAnchor().getY() + self.lane[i].getHeight() / 2):
+                return True
         return False
 
-    def car_collision2(self, Frog):
-        if (Frog.initial.getAnchor().getX() >= self.lane[1].getAnchor().getX() - self.lane[1].getWidth() / 2 and
-            Frog.initial.getAnchor().getX() <= self.lane[1].getAnchor().getX() + self.lane[1].getWidth() / 2 and 
-            Frog.initial.getAnchor().getY() >= self.lane[1].getAnchor().getY() - self.lane[1].getHeight() / 2 and
-            Frog.initial.getAnchor().getY() <= self.lane[1].getAnchor().getY() + self.lane[1].getHeight() / 2):
-            return True
-        return False
-
-    def car_collision3(self, Frog):
-        if (Frog.initial.getAnchor().getX() >= self.lane[2].getAnchor().getX() - self.lane[2].getWidth() / 2 and
-            Frog.initial.getAnchor().getX() <= self.lane[2].getAnchor().getX() + self.lane[2].getWidth() / 2 and 
-            Frog.initial.getAnchor().getY() >= self.lane[2].getAnchor().getY() - self.lane[2].getHeight() / 2 and
-            Frog.initial.getAnchor().getY() <= self.lane[2].getAnchor().getY() + self.lane[2].getHeight() / 2):
-            return True
-        return False
-
-    def car_collision4(self, Frog):
-        if (Frog.initial.getAnchor().getX() >= self.lane[3].getAnchor().getX() - self.lane[3].getWidth() / 2 and
-            Frog.initial.getAnchor().getX() <= self.lane[3].getAnchor().getX() + self.lane[3].getWidth() / 2 and 
-            Frog.initial.getAnchor().getY() >= self.lane[3].getAnchor().getY() - self.lane[3].getHeight() / 2 and
-            Frog.initial.getAnchor().getY() <= self.lane[3].getAnchor().getY() + self.lane[3].getHeight() / 2):
-            return True
-        return False
 
 class Logs:
     def __init__(self, window):
@@ -422,20 +398,13 @@ class Logs:
     def get_logs(self):
         return self.logs
 
-    def is_collision1(self, Frog):
-        if (Frog.initial.getAnchor().getX() >= self.logs[0].getAnchor().getX() - self.logs[0].getWidth() / 2 and
-            Frog.initial.getAnchor().getX() <= self.logs[0].getAnchor().getX() + self.logs[0].getWidth() / 2 and 
-            Frog.initial.getAnchor().getY() >= self.logs[0].getAnchor().getY() - self.logs[0].getHeight() / 2 and
-            Frog.initial.getAnchor().getY() <= self.logs[0].getAnchor().getY() + self.logs[0].getHeight() / 2):
-            return True
-        return False
-
-    def is_collision2(self, Frog):
-        if (Frog.initial.getAnchor().getX() >= self.logs[1].getAnchor().getX() - self.logs[1].getWidth() / 2 and
-            Frog.initial.getAnchor().getX() <= self.logs[1].getAnchor().getX() + self.logs[1].getWidth() / 2 and 
-            Frog.initial.getAnchor().getY() >= self.logs[1].getAnchor().getY() - self.logs[1].getHeight() / 2 and
-            Frog.initial.getAnchor().getY() <= self.logs[1].getAnchor().getY() + self.logs[1].getHeight() / 2):
-            return True
+    def log_collisions(self, Frog):
+        for i in range(0, len(self.logs)):
+            if (Frog.initial.getAnchor().getX() >= self.logs[i].getAnchor().getX() - self.logs[i].getWidth() / 2 and
+                Frog.initial.getAnchor().getX() <= self.logs[i].getAnchor().getX() + self.logs[i].getWidth() / 2 and 
+                Frog.initial.getAnchor().getY() >= self.logs[i].getAnchor().getY() - self.logs[i].getHeight() / 2 and
+                Frog.initial.getAnchor().getY() <= self.logs[i].getAnchor().getY() + self.logs[i].getHeight() / 2):
+                return True
         return False
 
     def log_movement(self):
@@ -592,10 +561,10 @@ class Game(User):
             car.car_movement()
             logs.log_movement()
 
-            if not logs.is_collision1(temp) and not logs.is_collision2(temp) and not tp.turtle_collision1(temp) and not tp.turtle_collision2(temp) and not Sf.frog_collision1(temp) and not Sf.frog_collision2(temp):
+            if not logs.log_collisions(temp) and not tp.turtle_collisions(temp) and not Sf.frog_collision1(temp) and not Sf.frog_collision2(temp):
                 break
 
-            elif car.car_collision1(temp) or car.car_collision2(temp) or car.car_collision3(temp) or car.car_collision4(temp): 
+            elif car.car_collisions(temp): 
                 break
 
             elif Sf.frog_collision2(temp):
